@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { Link as RouterLink } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
+import { useTranslation } from 'react-i18next';
 
 import {
   Alert as MuiAlert,
@@ -32,6 +33,7 @@ const Typography = styled(MuiTypography)(spacing);
 
 function SignIn() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { signIn } = useAuth();
 
   return (
@@ -128,11 +130,8 @@ function SignIn() {
           </Button>
           <Centered>
             ¿Aún no tienes cuenta?{" "}
-            {/*<Link to="../sign-up" component={RouterLink} >*/}
-            {/*  Sign up*/}
-            {/*</Link>*/}
-            <Link to="" component={RouterLink} sx={{ textDecoration: 'line-through'}} >
-              Registrate
+            <Link to="../sign-up" component={RouterLink} >
+              {t("Sign Up")}
             </Link>
           </Centered>
         </form>

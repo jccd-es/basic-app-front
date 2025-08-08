@@ -117,6 +117,8 @@ const VectorMaps = async(() => import("@/pages/maps/VectorMaps"));
 
 
 // App
+const BasicDashboard = async(() => import("@/pages/app/dashboard"));
+const Users = async(() => import("@/pages/app/users"));
 const Bookings = async(() => import("@/pages/app/bookings/Bookings"));
 const Rentals = async(() => import("@/pages/app/rentals/Rentals.jsx"));
 const Vehicles = async(() => import("@/pages/app/vehicles/Vehicles"));
@@ -564,7 +566,11 @@ const routes = [
       },
       {
         path: "dashboard",
-        element: <Default />,
+        element: <BasicDashboard />,
+      },
+      {
+        path: "settings/users",
+        element: <Users />,
       },
       {
         path: "bookings",

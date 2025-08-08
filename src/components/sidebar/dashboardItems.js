@@ -14,6 +14,7 @@ import {
   PieChart,
   Sliders,
   Users,
+  Settings,
   Car,
   CalendarCheck,
   Building,
@@ -33,11 +34,11 @@ const navApp = [
   //   icon: Calendar,
   //   title: "Reservas",
   // },
-  {
-    href: "/app/rentals",
-    icon: CalendarCheck,
-    title: "Alquileres",
-  },
+  // {
+  //   href: "/app/rentals",
+  //   icon: CalendarCheck,
+  //   title: "Alquileres",
+  // },
   // {
   //   href: "/app/vehicles",
   //   icon: Car,
@@ -53,30 +54,31 @@ const navApp = [
   //     },
   //   ],
   // },
+  // {
+  //   href: "/app/vehicles/list",
+  //   icon: Car,
+  //   title: "Vehiculos"
+  // },
+  // {
+  //   href: "/app/locations",
+  //   icon: MapPin,
+  //   title: "Estableciminetos"
+  // },
   {
-    href: "/app/vehicles/list",
-    icon: Car,
-    title: "Vehiculos"
-  },
-  {
-    href: "/app/locations",
-    icon: MapPin,
-    title: "Estableciminetos"
-  },
-  {
-    href: "/app/ses-hospedajes",
-    icon: ArrowLeftRight,
-    title: "SES Hospedajes",
+    href: "/app/settings",
+    icon: Settings,
+    title: "Settings",
     children: [
 
       {
-        href: "/app/ses-hospedajes/reports",
-        title: "Reportes",
+        href: "/app/settings/users",
+        icon: Users,
+        title: "Users",
       },
-      {
-        href: "/app/ses-hospedajes/settings",
-        title: "Configuración",
-      },
+      // {
+      //   href: "/app/ses-hospedajes/settings",
+      //   title: "Configuración",
+      // },
       // {
       //   href: "/app/ses-hospedajes/docs",
       //   title: "Documentacion",

@@ -4,7 +4,7 @@ import { initReactI18next } from "react-i18next";
 const resources = {
   es: {
     translation: {
-      Search: "Buscar…",
+      Search: "Buscar",
       "Welcome back": "Bienvenido de nuevo",
       "We've missed you": "Te hemos extrañado",
       "The simplest and fastest way to build your next MUI dashboard or app.": "El camino más sencillo y rápido para construir tu próximo dashboard MUI o aplicación.",
@@ -19,11 +19,13 @@ const resources = {
       "Organizacion": "Organizacion",
       "Suscripcion": "Suscripcion",
       "Notificaciones": "Notificaciones",
+      "Sign In": "Acceder",
+      "Sign Up": "Registrarse",
     },
   },
   en: {
     translation: {
-      Search: "Search topics…",
+      Search: "Search",
       "Welcome back": "Welcome back",
       "We've missed you": "We've missed you",
       "The simplest and fastest way to build your next MUI dashboard or app.": "The simplest and fastest way to build your next MUI dashboard or app.",
@@ -32,12 +34,14 @@ const resources = {
       "Login": "Login",
       "Documentation": "Documentation",
       "Reservas": "Bookings",
-      "Alquileres": "Rentals",
+      "Alquileres": "Index",
       "Vehiculos": "Vehicles",
       "Equipo": "Team",
       "Organizacion": "Organization",
       "Suscripcion": "Subscription",
       "Notificaciones": "Notifications",
+      "Sign In": "Sign In",
+      "Sign Up": "Sign Up",
     },
   },
 };

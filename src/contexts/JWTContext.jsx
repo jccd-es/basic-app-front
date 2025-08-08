@@ -142,13 +142,13 @@ function AuthProvider({ children }) {
     dispatch({ type: SIGN_OUT });
   };
 
-  const signUp = async (email, password, firstName, lastName) => {
+  const signUp = async (email, password, name /*, lastName*/) => {
     try {
       const response = await axios.post("/api/auth/sign-up", {
         email,
         password,
-        firstName,
-        lastName,
+        name,
+        // lastName,
       });
       
       const { success, accessToken, user } = response.data;

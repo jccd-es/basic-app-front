@@ -15,6 +15,7 @@ import {
 import { ReactComponent as Logo } from "@/vendor/logo.svg";
 import NavbarLanguagesDropdown from "@/components/navbar/NavbarLanguagesDropdown.jsx";
 import { useTranslation } from 'react-i18next';
+import {Link as RouterLink} from "react-router";
 
 const Button = styled(MuiButton)(spacing);
 
@@ -46,9 +47,11 @@ const AppBarComponent = () => {
           <Container>
             <Grid container alignItems="center">
               <Grid>
-                <Brand>
-                  <BrandIcon /> RentingSuite.com
-                </Brand>
+                <Link to="/" component={RouterLink} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Brand>
+                    <BrandIcon /> Admin Dashboard
+                  </Brand>
+                </Link>
               </Grid>
               <Grid size="grow" />
               <Grid>
@@ -79,7 +82,7 @@ const AppBarComponent = () => {
                     component={Link}
                     to="/auth/sign-in"
                   >
-                    {t("Login")}
+                    {t("Sign In")}
                   </Button>
                 </Box>
                 <Button
@@ -88,9 +91,8 @@ const AppBarComponent = () => {
                   variant="contained"
                   component={Link}
                   to="/auth/sign-up"
-                  disabled
                 >
-                  {t("Register now")}
+                  {t("Sign Up")}
                 </Button>
                 {/*<NavbarLanguagesDropdown />*/}
               </Grid>

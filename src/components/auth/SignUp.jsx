@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { Link as RouterLink } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
+import { useTranslation } from 'react-i18next';
 
 import {
   Alert as MuiAlert,
@@ -28,28 +29,29 @@ const Centered = styled(Typography)`
 
 function SignUp() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { signUp } = useAuth();
 
   return (
     <Formik
       initialValues={{
-        firstName: "",
-        lastName: "",
+        name: "",
+        // lastName: "",
         email: "",
         password: "",
         confirmPassword: "",
         submit: false,
       }}
       validationSchema={Yup.object().shape({
-        firstName: Yup.string().max(255).required("First name is required"),
-        lastName: Yup.string().max(255).required("Last name is required"),
+        name: Yup.string().max(255).required("First name is required"),
+        // lastName: Yup.string().max(255).required("Last name is required"),
         email: Yup.string()
           .email("Must be a valid email")
           .max(255)
           .required("Email is required"),
         password: Yup.string()
-          .min(12, "Must be at least 12 characters")
-          .max(255)
+          .min(6, "Must be at least 6 characters")
+          .max(128, "Must be less than 128 characters")
           .required("Required"),
         confirmPassword: Yup.string().oneOf(
           [Yup.ref("password"), null],
@@ -61,8 +63,8 @@ function SignUp() {
           await signUp(
             values.email,
             values.password,
-            values.firstName,
-            values.lastName
+            values.name,
+            // values.lastName
           );
           navigate("/auth/sign-in");
         } catch (error) {
@@ -91,28 +93,28 @@ function SignUp() {
           )}
           <TextField
             type="text"
-            name="firstName"
-            label="First name"
-            value={values.firstName}
-            error={Boolean(touched.firstName && errors.firstName)}
+            name="name"
+            label="Name"
+            value={values.name}
+            error={Boolean(touched.name && errors.name)}
             fullWidth
-            helperText={touched.firstName && errors.firstName}
+            helperText={touched.name && errors.name}
             onBlur={handleBlur}
             onChange={handleChange}
             my={3}
           />
-          <TextField
-            type="text"
-            name="lastName"
-            label="Last name"
-            value={values.lastName}
-            error={Boolean(touched.lastName && errors.lastName)}
-            fullWidth
-            helperText={touched.lastName && errors.lastName}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            my={3}
-          />
+          {/*<TextField*/}
+          {/*  type="text"*/}
+          {/*  name="lastName"*/}
+          {/*  label="Last name"*/}
+          {/*  value={values.lastName}*/}
+          {/*  error={Boolean(touched.lastName && errors.lastName)}*/}
+          {/*  fullWidth*/}
+          {/*  helperText={touched.lastName && errors.lastName}*/}
+          {/*  onBlur={handleBlur}*/}
+          {/*  onChange={handleChange}*/}
+          {/*  my={3}*/}
+          {/*/>*/}
           <TextField
             type="email"
             name="email"
@@ -162,7 +164,7 @@ function SignUp() {
           <Centered>
             Already have an account?{" "}
             <Link to="../sign-in" component={RouterLink}>
-              Log in
+              {t("Sign In")}
             </Link>
           </Centered>
         </form>

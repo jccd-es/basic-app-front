@@ -171,7 +171,7 @@ function Introduction() {
               {/*<Version variant="body2">v6.0.0</Version>*/}
               <LogoIcon />
               <Title variant="h1" gutterBottom>
-                 Renting Suite
+                Admin Dashboard
                 {/*{t("The simplest and fastest way to build your next MUI dashboard or app.")}*/}
               </Title>
 
@@ -183,8 +183,11 @@ function Introduction() {
                   }}
                 >
                   <Subtitle color="textSecondary">
-                    La solución todo en uno para gestionar tu flota de vehículos de alquiler
-                    de forma eficiente, segura y en cumplimiento con los reportes a las autoridades.
+                    Plantilla base para futuros proyectos de paneles de administración.
+                    Incluye una configuración inicial de componentes y herramientas comunes para agilizar el desarrollo.
+                    <br />
+                    <b>Landing - Login - Registro - Dashboard - Usuarios</b>
+
                     {/*{t("Mira comes with hundreds of UI elements, forms, tables, charts, pages and icons that helps you to create your web apps or applications faster.")}*/}
                   </Subtitle>
                   <Button

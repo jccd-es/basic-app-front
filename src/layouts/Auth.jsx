@@ -8,11 +8,12 @@ import { ReactComponent as Logo } from "@/vendor/logo.svg";
 
 import Settings from "@/components/Settings";
 import GlobalStyle from "@/components/GlobalStyle";
+import AppBar from "@/pages/presentation/Landing/AppBar.jsx";
 
 const Root = styled.div`
   max-width: 520px;
   margin: 0 auto;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   display: flex;
   min-height: 100%;
@@ -36,16 +37,19 @@ const Wrapper = styled(Paper)`
 
 const Auth = ({ children }) => {
   return (
-    <Root>
-      <CssBaseline />
-      <GlobalStyle />
-      <Brand />
-      <Wrapper>
-        {children}
-        <Outlet />
-      </Wrapper>
-      <Settings />
-    </Root>
+    <React.Fragment>
+      <AppBar />
+      <Root>
+        <CssBaseline />
+        <GlobalStyle />
+        <Brand />
+        <Wrapper>
+          {children}
+          <Outlet />
+        </Wrapper>
+        <Settings />
+      </Root>
+    </React.Fragment>
   );
 };
 
