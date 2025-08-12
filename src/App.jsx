@@ -32,8 +32,8 @@ function App({ emotionCache = clientSideEmotionCache }) {
     <CacheProvider value={emotionCache}>
       <HelmetProvider>
         <Helmet
-          titleTemplate="%s | RentingSuite.com"
-          defaultTitle="RentingSuite.com"
+          titleTemplate={`%s | ${import.meta.env.VITE_APP_NAME}`}
+          defaultTitle={import.meta.env.VITE_APP_NAME}
         />
         <Provider store={store}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>

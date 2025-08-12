@@ -49,7 +49,7 @@ const AppBarComponent = () => {
               <Grid>
                 <Link to="/" component={RouterLink} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <Brand>
-                    <BrandIcon /> Admin Dashboard
+                    <BrandIcon /> {import.meta.env.VITE_APP_NAME}
                   </Brand>
                 </Link>
               </Grid>

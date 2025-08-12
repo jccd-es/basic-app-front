@@ -19,7 +19,7 @@ function SignIn() {
       <Helmet title="Sign In" />
       {/*<BigAvatar alt="Lucy" src="/static/img/avatars/avatar-1.jpg" />*/}
       <Typography component="h1" variant="h3" align="center" gutterBottom >
-        Admin Dashboard
+        {import.meta.env.VITE_APP_NAME}
       </Typography>
       {/*<Typography component="h2" variant="subtitle1" align="center">*/}
       {/*  Sign in to your account to continue*/}

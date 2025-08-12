@@ -25,6 +25,8 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { green, orange, red } from "@mui/material/colors";
 import {
@@ -32,13 +34,48 @@ import {
   Archive as ArchiveIcon,
   FilterList as FilterListIcon,
   RemoveRedEye as RemoveRedEyeIcon,
+  Refresh as RefreshIcon,
 } from "@mui/icons-material";
 import { spacing } from "@mui/system";
 import UsersTable from "./Users.table.jsx";
+import useUsers from "@/hooks/useUsers";
 
 const Divider = styled(MuiDivider)(spacing);
 
 function Index() {
+  const { loading, error, refetch } = useUsers();
+  const [notification, setNotification] = React.useState({ open: false, message: '', severity: 'info' });
+
+  const handleNewUser = () => {
+    // TODO: Abrir modal o formulario para crear nuevo usuario
+    setNotification({
+      open: true,
+      message: 'Funcionalidad de crear usuario próximamente',
+      severity: 'info'
+    });
+  };
+
+  const handleRefresh = async () => {
+    try {
+      await refetch();
+      setNotification({
+        open: true,
+        message: 'Lista de usuarios actualizada',
+        severity: 'success'
+      });
+    } catch (err) {
+      setNotification({
+        open: true,
+        message: 'Error al actualizar la lista',
+        severity: 'error'
+      });
+    }
+  };
+
+  const handleCloseNotification = () => {
+    setNotification({ ...notification, open: false });
+  };
+
   return (
     <React.Fragment>
       <Helmet title="Users" />
@@ -49,10 +86,24 @@ function Index() {
           </Typography>
         </Grid>
         <Grid>
-          <div>
-            <Button variant="contained" color="primary">
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <Button 
+              variant="outlined" 
+              color="primary" 
+              onClick={handleRefresh}
+              disabled={loading}
+            >
+              <RefreshIcon />
+              Actualizar
+            </Button>
+            <Button 
+              variant="contained" 
+              color="primary" 
+              onClick={handleNewUser}
+              disabled={loading}
+            >
               <AddIcon />
-              New User
+              Nuevo Usuario
             </Button>
           </div>
         </Grid>
@@ -63,6 +114,21 @@ function Index() {
           <UsersTable />
         </Grid>
       </Grid>
+      
+      <Snackbar 
+        open={notification.open} 
+        autoHideDuration={6000} 
+        onClose={handleCloseNotification}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert 
+          onClose={handleCloseNotification} 
+          severity={notification.severity} 
+          sx={{ width: '100%' }}
+        >
+          {notification.message}
+        </Alert>
+      </Snackbar>
     </React.Fragment>
   );
 }

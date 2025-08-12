@@ -25,6 +25,8 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  CircularProgress,
+  Alert,
 } from "@mui/material";
 import { green, orange, red } from "@mui/material/colors";
 import {
@@ -39,15 +41,16 @@ import {
   MenuIcon
 } from "lucide-react";
 
-const Paper = styled(MuiPaper)(spacing);
+import useUsers from "@/hooks/useUsers";
 
+const Paper = styled(MuiPaper)(spacing);
 
 const columns = [
   {
     field: "name",
     headerName: "User",
     flex: 1,
-    valueGetter: (value, row) => `${row.name} - ${row.email}`
+    valueGetter: (value, row) => `${row.name || row.displayName || 'N/A'} - ${row.email || 'N/A'}`
   },
   {
     field: "actions",
@@ -57,39 +60,66 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    id: 1,
-    name: 'Example User',
-    email: 'example@rentingsuite.com'
-  },
-];
+function UsersTable() {
+  const { users, loading, error } = useUsers();
 
-function VehiclesTable () {
-  return <Paper style={{
-    display: 'flex',
-    flexDirection: 'column',
-    width: "100%"
-  }}>
-    <DataGrid
-      initialState={{
-        pagination: {
-          paginationModel: {
-            page: 0,
-            pageSize: 5
-          }
-        },
-      }}
-      pageSizeOptions={[5]}
-      rows={rows}
-      columns={columns}
-      checkboxSelection
-      disableColumnSorting
-      disableColumnFilter
-      disableColumnResize
-      disableColumnMenu
-    />
-  </Paper>
+  console.log({users});
+
+  if (loading) {
+    return (
+      <Paper style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '2rem',
+        width: "100%"
+      }}>
+        <CircularProgress />
+      </Paper>
+    );
+  }
+
+  if (error) {
+    return (
+      <Paper style={{
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '1rem',
+        width: "100%"
+      }}>
+        <Alert severity="error">
+          {error}
+        </Alert>
+      </Paper>
+    );
+  }
+
+  return (
+    <Paper style={{
+      display: 'flex',
+      flexDirection: 'column',
+      width: "100%"
+    }}>
+      <DataGrid
+        initialState={{
+          pagination: {
+            paginationModel: {
+              page: 0,
+              pageSize: 5
+            }
+          },
+        }}
+        pageSizeOptions={[5, 10, 25]}
+        rows={users}
+        columns={columns}
+        checkboxSelection
+        disableColumnSorting
+        disableColumnFilter
+        disableColumnResize
+        disableColumnMenu
+      />
+    </Paper>
+  );
 }
 
-export default VehiclesTable;
+export default UsersTable;

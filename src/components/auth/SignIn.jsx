@@ -39,9 +39,9 @@ function SignIn() {
   return (
     <Formik
       initialValues={{
-        email: "admin@rentingsuite.com",
+        email: "admin@rentingsuite.com", // TODO REMOVE
+        password: "admin1234", // TODO REMOVE
         // email: "",
-        password: "admin1234",
         // password: "",
         submit: false,
       }}

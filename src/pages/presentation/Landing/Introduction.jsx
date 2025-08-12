@@ -171,7 +171,7 @@ function Introduction() {
               {/*<Version variant="body2">v6.0.0</Version>*/}
               <LogoIcon />
               <Title variant="h1" gutterBottom>
-                Admin Dashboard
+                {import.meta.env.VITE_APP_NAME}
                 {/*{t("The simplest and fastest way to build your next MUI dashboard or app.")}*/}
               </Title>
 
