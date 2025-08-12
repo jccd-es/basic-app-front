@@ -21,7 +21,6 @@ const useUsers = () => {
       });
 
       const response = await axios.get(`/api/users?${params.toString()}`);
-      console.log(response.data);
       if (response.data.success) {
         setUsers(response.data.users || []);
       } else {
@@ -120,6 +119,11 @@ const useUsers = () => {
     fetchUsers({});
   }, [fetchUsers]);
 
+  // Función refetch mejorada
+  const refetch = useCallback(() => {
+    return fetchUsers(filters);
+  }, [fetchUsers, filters]);
+
   // Cargar datos iniciales
   useEffect(() => {
     fetchUsers();
@@ -136,7 +140,7 @@ const useUsers = () => {
     deleteUser,
     applyFilters,
     clearFilters,
-    refetch: useCallback(() => fetchUsers(filters))
+    refetch
   };
 };
 

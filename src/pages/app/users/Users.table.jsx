@@ -41,8 +41,6 @@ import {
   MenuIcon
 } from "lucide-react";
 
-import useUsers from "@/hooks/useUsers";
-
 const Paper = styled(MuiPaper)(spacing);
 
 const columns = [
@@ -60,24 +58,7 @@ const columns = [
   },
 ];
 
-function UsersTable() {
-  const { users, loading, error } = useUsers();
-
-  console.log({users});
-
-  if (loading) {
-    return (
-      <Paper style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '2rem',
-        width: "100%"
-      }}>
-        <CircularProgress />
-      </Paper>
-    );
-  }
+function UsersTable({ users, loading, error }) {
 
   if (error) {
     return (
@@ -110,13 +91,14 @@ function UsersTable() {
           },
         }}
         pageSizeOptions={[5, 10, 25]}
-        rows={users}
+        rows={users || []}
         columns={columns}
         checkboxSelection
         disableColumnSorting
         disableColumnFilter
         disableColumnResize
         disableColumnMenu
+        loading={loading}
       />
     </Paper>
   );

@@ -43,7 +43,7 @@ import useUsers from "@/hooks/useUsers";
 const Divider = styled(MuiDivider)(spacing);
 
 function Index() {
-  const { loading, error, refetch } = useUsers();
+  const { users, loading, error, refetch } = useUsers();
   const [notification, setNotification] = React.useState({ open: false, message: '', severity: 'info' });
 
   const handleNewUser = () => {
@@ -111,15 +111,15 @@ function Index() {
       <Divider my={6} />
       <Grid container spacing={6}>
         <Grid size={12}>
-          <UsersTable />
+          <UsersTable users={users} loading={loading} error={error} />
         </Grid>
       </Grid>
       
       <Snackbar 
         open={notification.open} 
-        autoHideDuration={6000} 
+        autoHideDuration={1000}
         onClose={handleCloseNotification}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
         <Alert 
           onClose={handleCloseNotification} 
