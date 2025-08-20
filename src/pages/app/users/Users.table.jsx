@@ -1,64 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { NavLink } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 
 import {
-  Box,
-  Breadcrumbs as MuiBreadcrumbs,
-  Button,
-  Checkbox,
-  Chip as MuiChip,
-  Divider as MuiDivider,
-  Grid,
   IconButton,
-  Link,
   Paper as MuiPaper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
-  Toolbar,
-  Tooltip,
-  Typography,
-  CircularProgress,
   Alert,
+  Badge,
 } from "@mui/material";
-import { green, orange, red } from "@mui/material/colors";
-import {
-  Add as AddIcon,
-  Archive as ArchiveIcon,
-  FilterList as FilterListIcon,
-  RemoveRedEye as RemoveRedEyeIcon,
-} from "@mui/icons-material";
 import { spacing } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
 import {
-  MenuIcon
+  EllipsisVerticalIcon,
+  PencilIcon,
 } from "lucide-react";
+import {useNavigate} from "react-router-dom";
 
 const Paper = styled(MuiPaper)(spacing);
 
-const columns = [
-  {
-    field: "name",
-    headerName: "User",
-    flex: 1,
-    valueGetter: (value, row) => `${row.name || row.displayName || 'N/A'} - ${row.email || 'N/A'}`
-  },
-  {
-    field: "actions",
-    renderHeader: () => <MenuIcon />,
-    width: 50,
-    disableColumnMenu: true,
-  },
-];
+function UsersTable({ users: rows, loading, error }) {
+  const navigate = useNavigate();
+  const [rowSelectionModel, setRowSelectionModel] = useState([]);
 
-function UsersTable({ users, loading, error }) {
+  const getSelectedRows = () => {
+    return rows.filter(row => rowSelectionModel.includes(row.id));
+  }
 
   if (error) {
     return (
@@ -75,6 +40,65 @@ function UsersTable({ users, loading, error }) {
     );
   }
 
+  const columns = [
+    {
+      field: "role",
+      headerName: "Role",
+      width: 150,
+      valueGetter: (value, row) => `${row.role.name|| 'N/A'}`
+    },
+    {
+      field: "name",
+      headerName: "User",
+      flex: 1,
+      valueGetter: (value, row) => `${row.name || row.displayName || 'N/A'} - ${row.email || 'N/A'}`
+    },
+    {
+      field: "actions",
+      renderHeader: () => {
+
+        const open = false;
+        const handleClick = (event) => {};
+        return <IconButton
+          aria-controls={open ? 'actions-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+          disabled={rowSelectionModel.length === 0}
+        >
+          <Badge
+            badgeContent={rowSelectionModel.length}
+            color="primary"
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+          >
+            <EllipsisVerticalIcon />
+          </Badge>
+        </IconButton>
+      },
+      width: 60,
+      disableColumnMenu: true,
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: ({ value, row }) => {
+        const open = false;
+        const handleClick = (event) => {
+          navigate('/app/settings/users/' + row.id, { replace: true });
+        };
+        return <IconButton
+          aria-controls={open ? 'actions-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+        >
+          <PencilIcon />
+        </IconButton>
+      }
+    },
+  ];
+
   return (
     <Paper style={{
       display: 'flex',
@@ -90,15 +114,42 @@ function UsersTable({ users, loading, error }) {
             }
           },
         }}
-        pageSizeOptions={[5, 10, 25]}
-        rows={users || []}
+        pageSizeOptions={[10]}
+        rows={rows || []}
         columns={columns}
         checkboxSelection
+        onRowSelectionModelChange={setRowSelectionModel}
+        rowSelectionModel={rowSelectionModel}
+        disableRowSelectionOnClick
         disableColumnSorting
         disableColumnFilter
         disableColumnResize
         disableColumnMenu
         loading={loading}
+        hideFooterSelectedRowCount
+        sx={{
+          '&.MuiDataGrid-root': {
+            border: 'none',
+            // borderRadius: 0,
+          },
+          '& .MuiDataGrid-columnHeaders': {
+            borderRadius: 0,
+            fontWeight: 'bold',
+            maxHeight: 'none !important'
+          },
+          '& .MuiDataGrid-iconSeparator': {
+            display: 'none',
+          },
+          '& .MuiDataGrid-footerContainer': {
+            justifyContent: 'end',
+          },
+          '& .MuiDataGrid-selectedRowCount': {
+            display: 'none',
+          },
+          '& .MuiDataGrid-columnHeaderTitleContainer,.MuiDataGrid-columnHeaderTitleContainerContent': {
+            overflow: 'visible',
+          },
+        }}
       />
     </Paper>
   );

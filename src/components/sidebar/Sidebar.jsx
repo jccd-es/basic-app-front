@@ -68,10 +68,10 @@ const BrandChip = styled(Chip)`
 const Sidebar = ({ items, showFooter = true, ...rest }) => {
   return (
     <Drawer variant="permanent" {...rest}>
-      <Brand component={NavLink} to="/">
+      <Brand component={NavLink} to="/app">
         <BrandIcon />{" "}
         <Box ml={1}>
-          RentingSuite.com
+          {import.meta.env.VITE_APP_NAME}
         </Box>
       </Brand>
       <SidebarNav items={items} />

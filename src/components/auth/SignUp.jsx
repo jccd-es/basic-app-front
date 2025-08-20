@@ -43,7 +43,7 @@ function SignUp() {
         submit: false,
       }}
       validationSchema={Yup.object().shape({
-        name: Yup.string().max(255).required("First name is required"),
+        name: Yup.string().max(255).required("Name is required"),
         // lastName: Yup.string().max(255).required("Last name is required"),
         email: Yup.string()
           .email("Must be a valid email")

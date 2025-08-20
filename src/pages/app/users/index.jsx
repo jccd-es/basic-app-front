@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { NavLink } from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
 import {
@@ -41,18 +41,21 @@ import UsersTable from "./Users.table.jsx";
 import useUsers from "@/hooks/useUsers";
 
 const Divider = styled(MuiDivider)(spacing);
+const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
 function Index() {
+  const navigate = useNavigate();
   const { users, loading, error, refetch } = useUsers();
   const [notification, setNotification] = React.useState({ open: false, message: '', severity: 'info' });
 
   const handleNewUser = () => {
-    // TODO: Abrir modal o formulario para crear nuevo usuario
-    setNotification({
-      open: true,
-      message: 'Funcionalidad de crear usuario próximamente',
-      severity: 'info'
-    });
+    navigate("/app/settings/users/new", { replace: true });
+    // // TODO: Abrir modal o formulario para crear nuevo usuario
+    // setNotification({
+    //   open: true,
+    //   message: 'Funcionalidad de crear usuario próximamente',
+    //   severity: 'info'
+    // });
   };
 
   const handleRefresh = async () => {
@@ -84,6 +87,10 @@ function Index() {
           <Typography variant="h3" gutterBottom display="inline">
             Users
           </Typography>
+          <Breadcrumbs aria-label="Breadcrumb" mt={2}>
+            <Typography>Settings</Typography>
+            <Typography>Users</Typography>
+          </Breadcrumbs>
         </Grid>
         <Grid>
           <div style={{ display: 'flex', gap: '8px' }}>
