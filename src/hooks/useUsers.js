@@ -1,11 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from '@/utils/axios';
+import { useSocket } from '@/contexts/SocketContext';
 
 const useUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({});
+
+  // Usar el socket del contexto
+  const { on, off, emit } = useSocket();
 
   // Obtener usuarios con filtros opcionales
   const fetchUsers = useCallback(async (filterParams = {}) => {
@@ -35,6 +39,23 @@ const useUsers = () => {
     }
   }, []);
 
+  // Configurar eventos del socket
+  useEffect(() => {
+    const handleUsersEvent = ({ action, data, reload }) => {
+      if (reload === true) {
+        fetchUsers(filters);
+      }
+    };
+
+    // Registrar el evento y obtener función de cleanup
+    const cleanup = on('users', handleUsersEvent);
+
+    // Cleanup automático
+    return cleanup;
+  }, [on, fetchUsers, filters]);
+
+  // ... resto de funciones (createUser, updateUser, etc.) sin cambios
+
   // Crear nuevo usuario
   const createUser = useCallback(async (userData) => {
     try {
@@ -44,7 +65,6 @@ const useUsers = () => {
       const response = await axios.post('/api/users', userData);
       
       if (response.data.success) {
-        // Refrescar la lista después de crear
         await fetchUsers(filters);
         return response.data;
       } else {
@@ -68,7 +88,6 @@ const useUsers = () => {
       const response = await axios.put(`/api/users/${id}`, userData);
       
       if (response.data.success) {
-        // Refrescar la lista después de actualizar
         await fetchUsers(filters);
         return response.data;
       } else {
@@ -92,7 +111,6 @@ const useUsers = () => {
       const response = await axios.delete(`/api/users/${id}`);
       
       if (response.data.success) {
-        // Refrescar la lista después de eliminar
         await fetchUsers(filters);
         return response.data;
       } else {
@@ -140,7 +158,8 @@ const useUsers = () => {
     deleteUser,
     applyFilters,
     clearFilters,
-    refetch
+    refetch,
+    socketEmit: emit
   };
 };
 

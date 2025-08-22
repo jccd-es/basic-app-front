@@ -17,6 +17,7 @@ import { store } from "./redux/store";
 import createEmotionCache from "@/utils/createEmotionCache";
 
 import { AuthProvider } from "./contexts/JWTContext";
+import { SocketProvider } from "./contexts/SocketContext";
 // import { AuthProvider } from "./contexts/FirebaseAuthContext";
 // import { AuthProvider } from "./contexts/Auth0Context";
 // import { AuthProvider } from "./contexts/CognitoContext";
@@ -38,7 +39,11 @@ function App({ emotionCache = clientSideEmotionCache }) {
         <Provider store={store}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <MuiThemeProvider theme={createTheme(theme)}>
-              <AuthProvider>{content}</AuthProvider>
+              <AuthProvider>
+                <SocketProvider>
+                  {content}
+                </SocketProvider>
+              </AuthProvider>
             </MuiThemeProvider>
           </LocalizationProvider>
         </Provider>
